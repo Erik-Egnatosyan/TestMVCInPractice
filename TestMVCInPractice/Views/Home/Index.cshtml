@@ -2,4 +2,30 @@
     ViewData["Title"] = "Главная страница сайта";
 }
 
-<h1>Главная страница сайта</h1>
+@{
+    var languages = new List<string> { "Armenian", "Russian", "English" };
+}
+
+@foreach (var language in languages)
+{
+    var id = language.ToLower();
+    <button type="button" onclick="changeLanguage('@language')">Switch to @language</button>
+}
+
+<h1 id="language-text"></h1>
+
+<script>
+    function changeLanguage(language) {
+        $.ajax({
+            url: '/Home/ChangeLanguage',
+            type: 'POST',
+            data: { language: language },
+            success: function (result) {
+                $('#language-text').text(result);
+            },
+            error: function () {
+                alert('Error occurred while changing the language.');
+            }
+        });
+    }
+</script>

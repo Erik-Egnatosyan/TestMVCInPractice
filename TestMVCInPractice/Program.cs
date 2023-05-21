@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using TestMVCInPractice.Models;
+
 namespace TestMVCInPractice
 {
     public class Program
@@ -5,7 +8,8 @@ namespace TestMVCInPractice
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddDbContext<LanguagesContext>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
